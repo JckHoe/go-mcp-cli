@@ -8,9 +8,21 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// TODO refactor structure later
+type ServerFunctions struct {
+	name  string
+	tools []mcp.Tool
+}
+
+// TODO: handle multi mcp-server and tool listing
+var allTools []ServerFunctions
+
 func main() {
 	log.Infoln("Started the MCP Client CLI tool")
 
+	// TODO parse the json and create the struct for the startup
+
+	// One Configured Server do below
 	c, err := client.NewStdioMCPClient(
 		"npx",
 		[]string{}, // ENV
@@ -47,6 +59,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to list tools: %v", err)
 	}
+	allTools = append(allTools, ServerFunctions{
+		name:  "Server-filesystem",
+		tools: tools.Tools,
+	})
 	for _, tool := range tools.Tools {
 		log.Infof("- %s: %s\n", tool.Name, tool.Description)
 		log.Infof("Input Schema Type: %s\n", tool.InputSchema.Type)
@@ -59,4 +75,7 @@ func main() {
 			log.Infof("- %s\n", value)
 		}
 	}
+
+	// Start CLI Listing all the `allTools` selection is index from 1
+
 }
