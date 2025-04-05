@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/mcp"
 	log "github.com/sirupsen/logrus"
@@ -61,14 +60,4 @@ func main() {
 			log.Infof("- %s\n", value)
 		}
 	}
-
-	// Start HTTP Server
-	r := gin.Default()
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"Status": "OK",
-		})
-	})
-
-	r.Run(":8080")
 }
